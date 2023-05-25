@@ -45,8 +45,53 @@ class ModelTrainer:
                 "Gradient Boosting Regression": GradientBoostingRegressor()
             }
 
+            params={
+                "Linear Regression":{},
+                "Decision Tree":{
+                    'criterian':['squared_error','friedman_mse','poisson','absolute_error'],
+                    'splitter':['best','random'],
+                    'max_feature':['sqrt','log2']
+                },
+                "Random Forest":{
+                    'criterian':['squared_error','friedman_mse','poisson','absolute_error'],
+                    'n_estimators':[8,16,32,64,128,256],
+                    'max_feature':['sqrt','log2']
+
+                },
+
+                "K-nearest Naghbour":{
+                    'n_neighbors':[5,7,9,11],
+                    'weights':['distance','uniform'],
+                    'algorithm':['ball_tree','kd_tree','brute'],
+                },
+                "Catboost Regression":{
+                    'depth': [6,8,10],
+                    'learning_rate': [0.01, 0.05, 0.1],
+                    'iterations': [30, 50, 100]
+                },
+                "Adaboost regression":{
+                    'learning_rate':[.1,.01,0.5,.001],
+                    'loss':['linear','square','exponential'],
+                    'n_estimators': [8,16,32,64,128,256]
+                },
+                "Xgboost Regression":{
+                    'learning_rate':[.1,.01,.05,.001],
+                    'n_estimators': [8,16,32,64,128,256]
+                },
+
+                "Gradient Boosting Regression":{
+                    'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
+                    'learning_rate':[.1,.01,.05,.001],
+                    'subsample':[0.6,0.7,0.75,0.8,0.85,0.9],
+                    'criterion':['squared_error', 'friedman_mse'],
+                    'max_features':['auto','sqrt','log2'],
+                    'n_estimators': [8,16,32,64,128,256]
+                }
+
+            }
+
             model_report:dict= evaluate_model(X_train=X_train,X_test=X_test,y_train=y_train,
-                                                   y_test=y_test,models=models)
+                                                   y_test=y_test,models=models,param=params)
                  
             best_model_score=max(sorted(model_report.values()))
 
@@ -62,7 +107,7 @@ class ModelTrainer:
             save_object(
                 file_path= self.model_trainer_config.trained_model_path,
                 obj=best_model 
-            )
+            ) 
 
             predicted=best_model.predict(X_test)
             r2_square=r2_score(y_test, predicted)
