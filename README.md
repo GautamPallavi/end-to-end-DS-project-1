@@ -44,3 +44,39 @@ AWS_ECR_LOGIN_URI = demo>> 566373416292.dkr.ecr.ap-south-1.amazonaws.com
 
 ECR_REPOSITORY_NAME = simple-app
 
+
+
+AZURE Cloud Deployement
+1. Create Container Registry
+2. Docker Setup in Local and push container Registry
+3. Create Azure web app with container
+4. Configured the github deployement center
+
+
+inside the registry you have to put your docker image
+create azure web app with respect to container not doing the deployement directly from the web app
+
+go to resource
+
+name of containee registry
+
+access keys-----> enable admin user------>login server should be handy----->also keep the password handy----> it is used when you push the docker image to container registry
+
+over view 
+search for web app for container registry
+or create web app
+
+Create docker image in container registry
+
+docker build -t testdockerkrish.azurecr.io/mltest:latest .
+login server-testdockerkrish.azurecr.io
+testdockerkrish.azurecr.io-container registry url
+application name-mltest
+
+docker login testdockerkrish.azurecr.io
+username and password saved must be given
+
+docker push testdockerkrish.azurecr.io/mltest:latest
+
+for pasting password- right click and press enter
+ 
